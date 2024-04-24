@@ -1,4 +1,4 @@
-FROM --platform=$TARGETOS/$TARGETARCH docker.io/library/almalinux:9-minimal as base
+FROM docker.io/library/almalinux:9-minimal as base
 
 LABEL maintainer="Cameron Carney <ccarney@zyphi.co>"
 
@@ -53,7 +53,7 @@ RUN \
     microdnf install -y findutils git yarnpkg
 
 RUN \
-    git clone https://github.com/pterodactyl/panel ./ --depth 1 --branch ${GIT_BRANCH} && \
+    git clone https://github.com/pterodactyl/panel ./ --depth 1 --branch v1.11.5 && \
     rm .git -rf && \
     chmod -R 755 storage/* bootstrap/cache && \
     find storage -type d > .storage.tmpl && \
