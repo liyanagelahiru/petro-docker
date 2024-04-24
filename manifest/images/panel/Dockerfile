@@ -32,9 +32,17 @@ VOLUME [ "/var/lib/caddy" ]
 
 WORKDIR /var/www/html
 
-# Let tini execute /entrypoint. This allows proper reaping of processes
-#USER caddy
-ENTRYPOINT [ "/usr/bin/tini", "--", "/entrypoint.sh" ]
+
+# Assuming the Dockerfile is in the same directory as the 'root' folder
+# Copy the entrypoint script from the 'root' subfolder to the container
+COPY root/entrypoint.sh /entrypoint.sh
+
+# Grant execution permissions to the entrypoint script
+RUN chmod +x /entrypoint.sh
+
+# Define tini as the entrypoint, which will handle signal forwarding and process reaping
+ENTRYPOINT ["/usr/bin/tini", "--", "/entrypoint.sh"]
+
 CMD [ "start-web" ]
 
 # Build phase of the container
