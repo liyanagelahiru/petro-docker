@@ -41,8 +41,8 @@ services:
       DB_HOST: 155.248.250.4
       DB_PORT: 3306
       DB_USER: "petro"
-      DB_PASSWORD: X5kFJ3dixG8Uw4AMkD5C
-      DB_DATABASE: "petro"
+      DB_PASSWORD: LZMrT3ZIArPMcVvdMnSU
+      DB_DATABASE: "petropanel"
     #labels:
     #  - "traefik.enable=true"
     #  - "traefik.http.routers.pterodactyl_panel.entryPoints=https"
