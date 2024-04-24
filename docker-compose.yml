@@ -1,0 +1,53 @@
+version: '3.8'
+services:
+  pterodactyl-panel:
+    image: my-php-app
+    container_name: pterodactyl-panel
+    hostname: pterodactyl-panel
+    restart: unless-stopped
+    networks:
+      - proxy
+    ports:
+      - "8001:80"
+    volumes:
+      - "/opt/appdata/pterodactyl-panel/appdata/:/data" #Appdata of Container
+      - "/opt/appdata/pterodactyl-node:/etc/pterodactyl" #Appdata - #Where config.yml goes into.
+      - "/opt/appdata/pterodactyl-node/data:/mnt/appdata/pterodactyl-node/data" #Shared data between Panel and Node/Wings.
+      - "/opt/appdata/pterodactyl-panel/nginx/:/etc/nginx/conf.d/" #Nginx Config
+    environment:
+      APP_ENV: "production"
+      APP_ENVIRONMENT_ONLY: "false"
+      APP_SERVICE_AUTHOR: "EMAIL"
+      APP_URL: "https://petro.itsnooblk.xyz"
+      APP_TIMEZONE: "Asia/Colombo"       # A list of valid timezones can be found here: http://php.net/manual/en/timezones.php
+      CACHE_DRIVER: "redis" #DON'T TOUCH
+      SESSION_DRIVER: "redis" #DON'T TOUCH
+      QUEUE_DRIVER: "redis" #DON'T TOUCH
+      REDIS_HOST: 155.248.250.4
+      REDIS_PORT: 32769
+      REDIS_USER: "admin"
+      REDIS_PASSWORD: REDIS-PASSWORD
+      MAIL_FROM: "EMAIL"
+      MAIL_DRIVER: "smtp"
+      MAIL_HOST: "smtp.gmail.com"
+      MAIL_PORT: "587"
+      MAIL_USERNAME: "ACCOUNT-GMAIL"
+      MAIL_PASSWORD: "APP_PASSWORD"
+      MAIL_ENCRYPTION: “true”
+      APP_DEBUG: “false”
+      TRUSTED_PROXIES: "*"
+      DB_HOST: 155.248.250.4
+      DB_PORT: 3306
+      DB_USER: "petro"
+      DB_PASSWORD: X5kFJ3dixG8Uw4AMkD5C
+      DB_DATABASE: "petro"
+    #labels:
+    #  - "traefik.enable=true"
+    #  - "traefik.http.routers.pterodactyl_panel.entryPoints=https"
+    #  - "traefik.http.routers.pterodactyl_panel.rule=Host(`${PANEL.DOMAIN.COM}`)"
+    #  - "traefik.http.services.pterodactyl_panel.loadbalancer.server.port=80"
+
+networks:
+  proxy:
+    driver: bridge
+    external: true
